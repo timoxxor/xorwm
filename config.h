@@ -72,6 +72,8 @@ static const char *mutevol[]    = { "/usr/bin/wpctl",   "set-mute",   "@DEFAULT_
 static const char *light_up[]   = { "/usr/bin/light",   "-A", "5", NULL };
 static const char *light_down[] = { "/usr/bin/light",   "-U", "5", NULL };
 
+static const char *prt_sc[] = { "maim", "-s", "|", "xclip", "-selection", "clipboard", "-t", "image/png", NULL};
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
@@ -79,8 +81,9 @@ static const Key keys[] = {
 	{ 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol   } },
 	{ 0,		  XF86XK_MonBrightnessUp,  spawn,	   {.v = light_up} },
 	{ 0,		 XF86XK_MonBrightnessDown, spawn,	   {.v = light_down} },
+	{ MODKEY|ShiftMask,		XK_s,      spawn,	   SHCMD("maim -s | xclip -selection clipboard -t image/png") },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } }, // XK_Return
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_b,      toggleextrabar, {0} },
 	{ MODKEY,                       XK_k,      focusstackvis,  {.i = +1 } },
@@ -107,8 +110,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_s,      show,           {0} },
 	{ MODKEY|ShiftMask,             XK_s,      showall,        {0} },
-	{ MODKEY,                       XK_h,      hide,           {0} },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("flameshot gui") },
+	//{ MODKEY,                       XK_h,      hide,           {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

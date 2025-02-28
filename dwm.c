@@ -784,8 +784,14 @@ drawbar(Monitor *m)
 					}
 					remainder--;
 				}
-				int mid = (tabw - TEXTW(c->name)) / 2;
-				drw_text(drw, x, 0, tabw, bh, mid, c->name, 0); 
+
+                if (TEXTW(c->name) < tabw) {
+			    	int mid = (tabw - TEXTW(c->name)) / 2;
+				    drw_text(drw, x, 0, tabw, bh, mid, c->name, 0); 
+                }
+                else { 
+                    drw_text(drw, x, 0, tabw, bh, lrpad-2, c->name, 0);                             
+                }
 				x += tabw;
 			}
 		} else {
