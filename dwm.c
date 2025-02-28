@@ -449,7 +449,7 @@ buttonpress(XEvent *e)
 		selmon = m;
 		focus(NULL);
 	}
-	if (ev->window == selmon->barwin) {
+	if (ev->window == selmon->extrabarwin) {
 		i = x = 0;
 		do
 			x += TEXTW(tags[i]);
@@ -462,8 +462,15 @@ buttonpress(XEvent *e)
 		/* 2px right padding */
 		else if (ev->x > selmon->ww - TEXTW(stext) + lrpad - 2)
 			click = ClkStatusText;
-		else {
-			x += TEXTW(selmon->ltsymbol);
+	} else if (ev->window == selmon->barwin) {
+		/*
+        if (ev->x < (int)TEXTW(estextl))
+			click = ClkExBarLeftStatus;
+		else if (ev->x > selmon->ww - (int)TEXTW(estextr))
+			click = ClkExBarRightStatus;
+		else
+			click = ClkExBarMiddle;*/
+            x += TEXTW(selmon->ltsymbol);
 			c = m->clients;
 
 			if (c) {
@@ -477,14 +484,7 @@ buttonpress(XEvent *e)
 				click = ClkWinTitle;
 				arg.v = c;
 			}
-		}
-	} else if (ev->window == selmon->extrabarwin) {
-		if (ev->x < (int)TEXTW(estextl))
-			click = ClkExBarLeftStatus;
-		else if (ev->x > selmon->ww - (int)TEXTW(estextr))
-			click = ClkExBarRightStatus;
-		else
-			click = ClkExBarMiddle;
+
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
