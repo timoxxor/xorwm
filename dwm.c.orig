@@ -226,6 +226,7 @@ static void tile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void toggleextrabar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglefullscr(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void togglewin(const Arg *arg);
@@ -249,6 +250,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void xzoom(const Arg *arg);
 
 /* variables */
 static const char broken[] = "broken";
@@ -1937,6 +1939,13 @@ togglefloating(const Arg *arg)
 }
 
 void
+togglefullscr(const Arg *arg)
+{
+  if(selmon->sel)
+    setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
+}
+
+void
 toggletag(const Arg *arg)
 {
 	unsigned int newtags;
@@ -2388,6 +2397,15 @@ zoom(const Arg *arg)
 	if (c == nexttiled(selmon->clients) && !(c = nexttiled(c->next)))
 		return;
 	pop(c);
+}
+
+void
+xzoom(const Arg *arg) 
+{
+	char zoom[10];
+	sprintf(zoom, "%.1fx%.1f", arg->f, arg->f);
+	char *cmd[] = {"xrandr", "--output", "eDP-1", "--scale", zoom, "--panning", "1920x1080", NULL};	
+	spawn(&(Arg){ .v = cmd });
 }
 
 int

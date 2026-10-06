@@ -3,7 +3,7 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no standard bar */
 static const int topbar             = 1;        /* 0 means standard bar at bottom */
@@ -71,8 +71,7 @@ static const char *mutevol[]    = { "/usr/bin/wpctl",   "set-mute",   "@DEFAULT_
 
 static const char *light_up[]   = { "/usr/bin/light",   "-A", "5", NULL };
 static const char *light_down[] = { "/usr/bin/light",   "-U", "5", NULL };
-
-static const char *prt_sc[] = { "maim", "-s", "|", "xclip", "-selection", "clipboard", "-t", "image/png", NULL};
+static const char *boomer[] = { "/home/timoxxor/boomer/boomer", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -94,7 +93,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY,                       XK_v,      spawn,          {.v = boomer} },
+	{ MODKEY,                       XK_z, 	spawn,           {.v = boomer} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
